@@ -33,8 +33,8 @@ pub fn main() !void {
     var bw = std.io.bufferedWriter(stdout_file);
     const stdout = bw.writer();
 
+    try stdout.print("DoBIce v0.0.2 By Daniel https://github.com/purpledan/dobice\n", .{});
     const header_width = try printHeader(allocator, "ICE. Birthdays", stdout);
-    try stdout.print("DoBIce v0.0.1 {} By Daniel\n", .{header_width});
 
     var fntSml = try fig.DefaultFont.init(allocator, fnt_fileSml);
     defer fntSml.deinit(allocator);
@@ -66,14 +66,12 @@ pub fn main() !void {
             try printMonth(allocator, &fntSml, entry.date, header_width, stdout);
             printed_banner = true;
         }
-        try stdout.print("{s} {} --- {s} --- Shares bday with: {s} (Born on {s} {} {s} {})\n", .{entry.date.weekdayName(),
+        try stdout.print("{s:>9} {d:2} ---{s:^9}--- also on this day ({s:^9}) in {}: {s}\n", .{entry.date.weekdayName(),
             entry.date.day,
             entry.name,
-            knwEnt.name,
             knwEnt.date.weekdayName(),
-            knwEnt.date.day,
-            knwEnt.date.monthName(),
             knwEnt.date.year,
+            knwEnt.name,
         });
 
         prev_month = entry.date.month;
